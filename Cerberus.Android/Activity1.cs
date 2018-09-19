@@ -19,7 +19,7 @@ namespace Cerberus.Android
 		protected override void OnCreate(Bundle bundle)
 		{
 			base.OnCreate(bundle);
-			var g = new Game1();
+			var g = new CerberusGame();
 			SetContentView((View)g.Services.GetService(typeof(View)));
 			g.Run();
 		}

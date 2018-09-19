@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\MSBuild\MonoGame\v3.0\Tools\MGCB.exe" /@:"c:\workspace\cerberus\Cerberus.Shared\Content\Content.mgcb" /outputDir:%3 /intermediateDir:C:\Workspace\Cerberus\Cerberus.Shared\Content\obj\%2 /platform:%1 /profile:Reach /compress:False

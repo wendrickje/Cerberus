@@ -1,27 +1,34 @@
+using Cerberus.Shared.Components;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Prism.Events;
 
 namespace Cerberus.Shared
 {
 	/// <summary>
 	/// This is the main type for your game.
 	/// </summary>
-	public class Game1 : Game
+	public class CerberusGame : Game
 	{
-		GraphicsDeviceManager graphics;
-		SpriteBatch spriteBatch;
+		GraphicsDeviceManager _graphics;
+		SpriteBatch _spriteBatch;
+		public MapComponent Map { get; set; }
+		public PlayerComponent Player { get; set; }
+		IEventAggregator _eventAggregator;
 
-		public Game1()
+		public CerberusGame()
 		{
-			graphics = new GraphicsDeviceManager(this);
+			_eventAggregator = new EventAggregator();
+			_graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
-
+			
 			this.IsMouseVisible = true;
-			graphics.IsFullScreen = false;
-			graphics.PreferredBackBufferWidth = 800;
-			graphics.PreferredBackBufferHeight = 480;
-			graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
+			_graphics.IsFullScreen = false;
+			_graphics.PreferredBackBufferWidth = 800;
+			_graphics.PreferredBackBufferHeight = 480;
+			_graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
+
 		}
 
 		/// <summary>
@@ -32,7 +39,6 @@ namespace Cerberus.Shared
 		/// </summary>
 		protected override void Initialize()
 		{
-			// TODO: Add your initialization logic here
 
 			base.Initialize();
 		}
@@ -44,9 +50,12 @@ namespace Cerberus.Shared
 		protected override void LoadContent()
 		{
 			// Create a new SpriteBatch, which can be used to draw textures.
-			spriteBatch = new SpriteBatch(GraphicsDevice);
+			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			// TODO: use this.Content to load your game content here
+			var tileTexture = Content.Load<Texture2D>("Tile");
+			Map = new MapComponent(_eventAggregator, GraphicsDevice, tileTexture);
+			var playerTexture = Content.Load<Texture2D>("Warrior");
+			Player = new PlayerComponent(_eventAggregator, GraphicsDevice, playerTexture);
 		}
 
 		/// <summary>
@@ -67,9 +76,8 @@ namespace Cerberus.Shared
 		{
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
 				Exit();
-
-			// TODO: Add your update logic here
-
+			Map.Update(gameTime);
+			Player.Update(gameTime);
 			base.Update(gameTime);
 		}
 
@@ -79,11 +87,12 @@ namespace Cerberus.Shared
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			GraphicsDevice.Clear(Color.DimGray);
-
-			// TODO: Add your drawing code here
-
+			_spriteBatch.Begin();
+			_spriteBatch.GraphicsDevice.Clear(Color.DarkSlateGray);
+			Map.Draw(gameTime);
+			Player.Draw(gameTime);
 			base.Draw(gameTime);
+			_spriteBatch.End();
 		}
 	}
 }
