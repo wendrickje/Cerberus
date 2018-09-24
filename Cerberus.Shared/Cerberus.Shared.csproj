@@ -68,10 +68,19 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\BattleComponent.cs" />
+    <Compile Include="Components\EnemyComponent.cs" />
+    <Compile Include="Components\HUD.cs" />
     <Compile Include="Components\MapComponent.cs" />
     <Compile Include="CerberusGame.cs" />
     <Compile Include="Components\PlayerComponent.cs" />
+    <Compile Include="DataModels\CharacterAttributes.cs" />
+    <Compile Include="Entities\EntityType.cs" />
+    <Compile Include="Entities\IEntity.cs" />
+    <Compile Include="Events\EnterBattleEvent.cs" />
+    <Compile Include="Events\EntityPositionChangedEvent.cs" />
     <Compile Include="Events\TileSelectedEvent.cs" />
+    <Compile Include="Events\UpdateLogEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
